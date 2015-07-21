@@ -1,0 +1,28 @@
+#!/bin/sh
+
+WIFIDEV=`find /sys/class/net -name 'wl*'`
+WIFIDEV=`basename $WIFIDEV`
+ETHDEV=`find /sys/class/net -name 'e*'` 
+ETHDEV=`basename $ETHDEV`
+BATTERY=`find /sys/class/power_supply/ -iname 'b*'`
+
+killall -9 clock battery cpu thermal memory network disk xtitle
+
+xtitle -sf 'T%25s' > "$PANEL_FIFO" &
+clock -sf 'C%a %b %d %H:%M:%S' -i 1 > "$PANEL_FIFO" &
+battery -seqf'B%s %3d' -p "$BATTERY/uevent" -i 5 > $PANEL_FIFO &
+cpu -sp "P " -f '%3d' -i 2 > $PANEL_FIFO &
+thermal -sp 'H ' -f '%2d' -i 5 > $PANEL_FIFO &
+disk -sf 'D %.4g %s' -i 3 > $PANEL_FIFO &
+memory -sf 'M %3d' -i 3 > $PANEL_FIFO &
+if [ "$WIFIDEV" == "" ]; then
+	if [ "$ETHDEV" != "" ]; then
+		network -sxf 'N%s %s %3d%%' -e $ETHDEV -i 3 > $PANEL_FIFO &
+	fi
+else
+	if [ "$ETHDEV" == "" ]; then
+		network -sxf 'N%s %s %3d%%' -w $WIFIDEV -i 3 > $PANEL_FIFO &
+	else
+		network -sxf 'N%s %s %3d%%' -w $WIFIDEV -e $ETHDEV -i 3 > $PANEL_FIFO &
+	fi
+fi

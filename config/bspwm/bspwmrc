@@ -1,0 +1,38 @@
+#!/bin/bash
+
+PANEL_HEIGHT=12
+
+if [ -e "$BSPWM_TREE" ] ; then
+	bspc restore -T "$BSPWM_TREE" -H "$BSPWM_HISTORY" -S "$BSPWM_STACK"
+	rm "$BSPWM_TREE" "$BSPWM_HISTORY" "$BSPWM_STACK"
+else
+	export SCREENS=$(xrandr -q | grep " connected" | wc -l)
+	NUM=(1 2 3 4 5 6 7 8 9 0)
+	SPLIT=$((10 / SCREENS))
+	for (( s = 0; s < ${SCREENS}; s++ )); do
+		bspc monitor ^$((s + 1)) -d ${NUM[$((s * SPLIT))]}
+		for (( m = 1 ; m < ${SPLIT} ; m++ )); do
+			bspc monitor ^$((s + 1)) -a ${NUM[$((s * SPLIT + m))]}
+		done
+	done
+	
+	bspc config split_ratio                 0.52
+	bspc config focused_border_color        "#009000"
+	bspc config active_border_color         "#007000"
+	bspc config normal_border_color         "#004000"
+	bspc config focused_locked_border_color "#000090"
+	bspc config active_locked_border_color  "#000070"
+	bspc config normal_locked_border_color  "#000040"
+	bspc config urgent_border_color         "#700000"
+	bspc config border_width                1
+	bspc config window_gap                  8
+	bspc config borderless_monocle          true
+	bspc config gapless_monocle             true
+	bspc config apply_floating_atom         true
+	bspc config focus_follows_pointer       true
+	bspc config top_padding                 24
+fi
+
+killall -9 panel
+
+panel &

@@ -1,0 +1,85 @@
+#!/bin/bash
+#
+# Raedwulf's bar configuration
+
+. panel_colors
+
+SCREENS=$(xrandr -q | grep " connected" | wc -l)
+while read -r line ; do
+    case $line in
+        C*)
+            clock_info="%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        B*)
+            bat_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}BAT%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        P*)
+            cpu_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}CPU%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        H*)
+            thermal_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}TEMP%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        M*)
+            mem_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}MEM%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        N*)
+            wifi_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}NET%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        D*)
+            disk_info="%{F$COLOR_INFO_FG}%{B$COLOR_INFO_BG}DISK%{F$COLOR_STATUS_FG}%{B$COLOR_STATUS_BG}${line#?}"
+            ;;
+        T*)
+            title="%{F$COLOR_TITLE_FG}%{B$COLOR_TITLE_BG}${line#?}"
+            ;;
+        W*)
+            wm_infos=""
+            IFS=':'
+            set -- ${line#?}
+            while [ $# -gt 0 ] ; do
+                item=$1
+                name=${item#?}
+                case $item in
+                    O*)
+                        # focused occupied desktop
+                        wm_infos="$wm_infos%{F$COLOR_FOCUSED_OCCUPIED_FG}%{B$COLOR_FOCUSED_OCCUPIED_BG}%{U$COLOR_FOREGROUND} %{+u}${name}%{-u} "
+                        ;;
+                    F*)
+                        # focused free desktop
+                        wm_infos="$wm_infos%{F$COLOR_FOCUSED_FREE_FG}%{B$COLOR_FOCUSED_FREE_BG}%{U$COLOR_FOREGROUND} %{+u}${name}%{-u} "
+                        ;;
+                    U*)
+                        # focused urgent desktop
+                        wm_infos="$wm_infos%{F$COLOR_FOCUSED_URGENT_FG}%{B$COLOR_FOCUSED_URGENT_BG}%{U$COLOR_FOREGROUND} %{+u}${name}%{-u} "
+                        ;;
+                    o*)
+                        # occupied desktop
+                        wm_infos="$wm_infos%{F$COLOR_OCCUPIED_FG}%{B$COLOR_OCCUPIED_BG} ${name} "
+                        ;;
+                    f*)
+                        # free desktop
+                        wm_infos="$wm_infos%{F$COLOR_FREE_FG}%{B$COLOR_FREE_BG} ${name} "
+                        ;;
+                    u*)
+                        # urgent desktop
+                        wm_infos="$wm_infos%{F$COLOR_URGENT_FG}%{B$COLOR_URGENT_BG} ${name} "
+                        ;;
+                    L*)
+                        # layout
+                        layout=$(printf "%s" "${name}" | sed 's/\(.\).*/\U\1/')
+                        wm_infos="$wm_infos    %{F$COLOR_LAYOUT_FG}%{B$COLOR_LAYOUT_BG}$layout"
+                        ;;
+                    esac
+                shift
+            done
+            ;;
+    esac
+    BAR="%{F${COLOR_BAR_FG}}%{B${COLOR_BAR_BG}}|"
+    TEXT="%{l} $wm_infos    $title %{r} ${BAR}${cpu_info}${BAR}${thermal_info}${BAR}${disk_info}${BAR}${mem_info}${BAR}${bat_info}${BAR}${wifi_info}${BAR}${clock_info}"
+    for (( s = 0; s < ${SCREENS}; s++ )); do
+        #echo "%{S0} ${TEXT}"
+        printf "%%{S%1d}%s" "${s}" "${TEXT}"
+    done
+    echo
+done
+
+# vim: ts=4 sw=4 et:

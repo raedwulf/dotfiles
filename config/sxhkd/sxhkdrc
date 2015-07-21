@@ -1,0 +1,121 @@
+#
+# bspwm hotkeys
+#
+
+super + alt + Escape
+    bspc quit
+
+super + grave
+    bspc window -c
+
+super + t
+    bspc desktop -l next
+
+super + b
+    bspc desktop -B
+
+super + {s,f,l}
+    bspc window -t {floating,fullscreen,locked}
+
+super + {c,Tab}
+    bspc {window,desktop} -f last
+
+super + c
+    bspc window -s last
+
+super + {o,i}
+	bspc control --record-history off; \
+	bspc window {older,newer} -f; \
+	bspc control --record-history on
+
+super + y
+    bspc window -w last.manual
+
+super + m
+    bspc window -s biggest
+
+super + {_,shift + }{h,j,k,l}
+    bspc window -{f,s} {left,down,up,right}
+
+super + z
+    bspc window -f next
+
+super + x
+    bspc window -f prev
+
+super + {comma,period}
+    bspc desktop -C {backward,forward}
+
+super + bracket{left,right}
+    bspc desktop -f {prev,next}
+
+super + ctrl + {h,j,k,l}
+    bspc window -p {left,down,up,right}
+
+super + ctrl + {_,shift + }space
+    bspc {window -p cancel,desktop -c}
+
+super + alt + {h,j,k,l}
+    bspc window -e {left,down,up,right} push
+
+super + alt + shift + {h,j,k,l}
+    bspc window -e {right,up,down,left} pull
+
+super + ctrl + {1-9,0}
+    bspc window -r 0.{1-9,10}
+
+super + {_,shift + }{1-9,0}
+    bspc {desktop -f,window -d} ^{1-9,10}
+
+~button1
+    bspc pointer -g focus
+
+super + button{1-3}
+    bspc pointer -g {move,resize_side,resize_corner}
+
+super + !button{1-3}
+    bspc pointer -t %i %i
+
+super + @button{1-3}
+    bspc pointer -u
+
+#
+# wm independent hotkeys
+#
+
+super + q
+    st
+
+super + w
+    dmenu_run -fn "Dejavu Sans Mono:pixelsize=10" -y 12
+
+Print
+    scrot -m `xdg-user-dir PICTURES`/screenshots/desktop-`date +%Y%m%d_%H%M%S`.png
+
+super + Print
+    $HOME/bin/record-desktop
+
+super + shift + Print
+    killall -9 ffmpeg
+
+super + Insert
+    $HOME/bin/wallpaper /usr/lib/xscreensaver/glmatrix
+
+super + shift + Insert
+    killall -9 compton glmatrix
+
+super + Delete
+    sudo connman_dmenu
+
+# make sxhkd reload its configuration files:
+super + Escape
+    pkill -USR1 -x sxhkd
+
+XF86AudioMute
+    amixer sset Master toggle
+
+XF86AudioLowerVolume
+    amixer sset Master 2dB-
+
+XF86AudioRaiseVolume
+    amixer sset Master 2dB+
