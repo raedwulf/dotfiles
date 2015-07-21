@@ -13,4 +13,10 @@ if [ ! -d "$TMPDIR" ]; then
 	chmod 0700 "$TMPDIR"
 fi
 
+# If not running interactively, don't do any more
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
 alias vi=vis
+
+PS1='[\u@\h \W]\$ '
