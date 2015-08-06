@@ -87,7 +87,7 @@ super + q
     st
 
 super + w
-    dmenu_run -fn "Dejavu Sans Mono:pixelsize=10" -y 12
+    dmenu_run -fn "Dejavu Sans Mono:pixelsize=10"
 
 Print
     scrot -m `xdg-user-dir PICTURES`/screenshots/desktop-`date +%Y%m%d_%H%M%S`.png
