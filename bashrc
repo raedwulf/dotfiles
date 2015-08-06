@@ -16,6 +16,9 @@ fi
 # If not running interactively, don't do any more
 [[ $- != *i* ]] && return
 
+export PAGER=less
+export EDITOR=vi
+
 alias ls='ls --color=auto'
 alias vi=vis
 
