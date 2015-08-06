@@ -16,6 +16,7 @@ export PANEL_FONT_FAMILY
 
 setxkbmap gb &
 sxhkd &
+xsetroot -cursor_name left_ptr &
 
 while true ; do
 	bspwm -p W || break
