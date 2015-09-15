@@ -1,7 +1,5 @@
 #!/bin/bash
 
-PANEL_HEIGHT=12
-
 if [ -e "$BSPWM_TREE" ] ; then
 	bspc restore -T "$BSPWM_TREE" -H "$BSPWM_HISTORY" -S "$BSPWM_STACK"
 	rm "$BSPWM_TREE" "$BSPWM_HISTORY" "$BSPWM_STACK"

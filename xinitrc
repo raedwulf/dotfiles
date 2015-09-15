@@ -8,7 +8,7 @@ export BSPWM_HISTORY
 export BSPWM_STACK
 
 PANEL_FIFO=${TMPDIR}/panel-fifo
-PANEL_HEIGHT=24
+PANEL_HEIGHT=14
 PANEL_FONT_FAMILY="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
 export PANEL_FIFO
 export PANEL_HEIGHT
