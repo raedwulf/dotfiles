@@ -19,5 +19,5 @@ sxhkd &
 xsetroot -cursor_name left_ptr &
 
 while true ; do
-	bspwm -p W || break
+	bspwm || break
 done

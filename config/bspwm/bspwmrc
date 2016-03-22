@@ -29,6 +29,7 @@ else
 	bspc config apply_floating_atom         true
 	bspc config focus_follows_pointer       true
 	bspc config top_padding                 24
+	bspc config history_aware_focus         true
 fi
 
 killall -9 panel
