@@ -6,7 +6,7 @@ super + alt + Escape
     bspc quit
 
 super + grave
-    bspc window -c
+    bspc node -c
 
 super + t
     bspc desktop -l next
@@ -15,33 +15,33 @@ super + b
     bspc desktop -B
 
 super + {s,f,l}
-    bspc window -t {floating,fullscreen,locked}
+    bspc node -t {floating,fullscreen,locked}
 
 super + {c,Tab}
-    bspc {window,desktop} -f last
+    bspc {node,desktop} -f last
 
 super + c
-    bspc window -s last
+    bspc node -s last
 
 super + {o,i}
 	bspc control --record-history off; \
-	bspc window {older,newer} -f; \
+	bspc node {older,newer} -f; \
 	bspc control --record-history on
 
 super + y
-    bspc window -w last.manual
+    bspc node -w last.manual
 
 super + m
-    bspc window -s biggest
+    bspc node -s biggest
 
 super + {_,shift + }{h,j,k,l}
-    bspc window -{f,s} {left,down,up,right}
+    bspc node -{f,s} {left,down,up,right}
 
 super + z
-    bspc window -f next
+    bspc node -f next
 
 super + x
-    bspc window -f prev
+    bspc node -f prev
 
 super + {comma,period}
     bspc desktop -C {backward,forward}
@@ -50,22 +50,22 @@ super + bracket{left,right}
     bspc desktop -f {prev,next}
 
 super + ctrl + {h,j,k,l}
-    bspc window -p {left,down,up,right}
+    bspc node -p {left,down,up,right}
 
 super + ctrl + {_,shift + }space
-    bspc {window -p cancel,desktop -c}
+    bspc {node -p cancel,desktop -c}
 
 super + alt + {h,j,k,l}
-    bspc window -e {left,down,up,right} push
+    bspc node -e {left,down,up,right} push
 
 super + alt + shift + {h,j,k,l}
-    bspc window -e {right,up,down,left} pull
+    bspc node -e {right,up,down,left} pull
 
 super + ctrl + {1-9,0}
-    bspc window -r 0.{1-9,10}
+    bspc node -r 0.{1-9,10}
 
 super + {_,shift + }{1-9,0}
-    bspc {desktop -f,window -d} ^{1-9,10}
+    bspc {desktop -f,node -d} ^{1-9,10}
 
 ~button1
     bspc pointer -g focus
