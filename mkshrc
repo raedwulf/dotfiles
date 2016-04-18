@@ -616,7 +616,7 @@ fi
 [[ $- != *i* ]] && return
 
 export PAGER=less
-export EDITOR=vi
+export EDITOR=vis
 
 alias ls='ls --color=auto'
 alias vi=vis
