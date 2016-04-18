@@ -11,7 +11,9 @@ set nu
 set complete=.,w,b,u,t
 set wildignore=*.o,*.pyc,*.pyo,.git,.svn
 set mouse=av
+if !has('nvim')
 set ttym=sgr
+endif
 set hidden
 set nofoldenable
 set showmatch
