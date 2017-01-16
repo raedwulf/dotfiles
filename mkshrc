@@ -617,11 +617,22 @@ fi
 # If not running interactively, don't do any more
 [[ $- != *i* ]] && return
 
-export PAGER=less
-export EDITOR=vis
+which vis >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+	export EDITOR=vis
+else
+	export EDITOR=vim
+fi
 
-alias ls='ls --color=auto'
-alias vi=vis
+export PAGER=less
+
+ls --version >/dev/null 2>&1
+if [ $? -eq 0 ]; then
+	alias ls='ls --color=auto'
+else
+	alias ls='ls -G'
+fi
+alias vi=$EDITOR
 alias callgrind="valgrind --tool=callgrind --dump-instr=yes --simulate-cache=yes --collect-jumps=yes"
 
 \: place customisations above this line
