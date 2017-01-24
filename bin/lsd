@@ -8,7 +8,7 @@ BATTERY=`find /sys/class/power_supply/ -iname 'b*'`
 
 killall -9 clock battery cpu thermal memory network disk xtitle
 
-xtitle -sf 'T%25s' > "$PANEL_FIFO" &
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
 clock -sf 'C%a %b %d %H:%M:%S' -i 1 > "$PANEL_FIFO" &
 battery -sf'B %s %3d' -p "$BATTERY/uevent" -i 5 > $PANEL_FIFO &
 cpu -sp "P " -f '%3d' -i 2 > $PANEL_FIFO &
