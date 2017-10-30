@@ -17,6 +17,7 @@ export PANEL_FONT_FAMILY
 setxkbmap gb &
 sxhkd &
 xsetroot -cursor_name left_ptr &
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
 
 while true ; do
 	bspwm || break
