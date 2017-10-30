@@ -23,7 +23,7 @@ else
 	bspc config normal_locked_border_color  "#000040"
 	bspc config urgent_border_color         "#700000"
 	bspc config border_width                1
-	bspc config window_gap                  8
+	bspc config window_gap                  0
 	bspc config borderless_monocle          true
 	bspc config gapless_monocle             true
 	bspc config apply_floating_atom         true
